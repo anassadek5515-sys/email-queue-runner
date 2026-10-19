@@ -18,13 +18,12 @@ def process_queue():
 
         if leads:
             lead = leads[0]
-            lead_id = lead["id"]
             lead_email = lead["lead_email"]
 
             print(f"📧 جاري معالجة الإيميل: {lead_email}")
 
-            # تحديث الحالة إلى sent
-            supabase.table("leads").update({"status": "sent"}).eq("id", lead_id).execute()
+            # تحديث الحالة إلى sent بناءً على الإيميل مباشرة
+            supabase.table("leads").update({"status": "sent"}).eq("lead_email", lead_email).execute()
             print(f"✅ تم تحديث حالة {lead_email} إلى sent بنجاح!")
         else:
             print("😴 لا توجد إيميلات معلقة (pending) حالياً.")
